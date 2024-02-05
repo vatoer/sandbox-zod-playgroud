@@ -48,10 +48,12 @@ export const InputDatePicker = ({
   const handleSelect: SelectSingleEventHandler = (newDate) => {
     setDate(newDate ?? date);
     setIsPopoverOpen(false);
-    const newValue = date
-      ? format(date, "PPP", { locale: props.locale ?? id })
-      : "";
-    setValue(name, newValue);
+    if (newDate) {
+      const newDateStr = format(newDate, "PPP", {
+        locale: props.locale ?? id,
+      });
+      setValue(name, newDateStr);
+    }
   };
 
   const defaultStartDate = new Date();
@@ -75,6 +77,11 @@ export const InputDatePicker = ({
             <input
               placeholder="dd-mm-yyyy"
               readOnly
+              // value={
+              //   date
+              //     ? format(date, "yyyy-MM-dd", { locale: props.locale ?? id })
+              //     : ""
+              // }
               type={"text"}
               id={name}
               {...register(name)}
