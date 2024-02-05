@@ -10,6 +10,7 @@ export const genericDateSchema = z.coerce.date();
 export const spriSchema = z.object({
   name: z.string().min(3).max(255),
   birthDate: genericDateSchema,
+  journeyDate: genericDateSchema,
 });
 
 type FormData = z.infer<typeof spriSchema>;
@@ -48,6 +49,13 @@ const MyForm = () => {
         name="birthDate"
         register={register}
         error={errors.birthDate}
+      />
+
+      <InputDatePicker
+        label="Journey Date"
+        name="journeyDate"
+        register={register}
+        error={errors.journeyDate}
       />
 
       <Button type="submit">Submit</Button>
