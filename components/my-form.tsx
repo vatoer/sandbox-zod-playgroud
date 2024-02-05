@@ -18,6 +18,7 @@ type FormData = z.infer<typeof spriSchema>;
 const MyForm = () => {
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
@@ -48,6 +49,7 @@ const MyForm = () => {
         label="Birth Date"
         name="birthDate"
         register={register}
+        setValue={setValue}
         error={errors.birthDate}
       />
 
@@ -55,6 +57,7 @@ const MyForm = () => {
         label="Journey Date"
         name="journeyDate"
         register={register}
+        setValue={setValue}
         error={errors.journeyDate}
       />
 

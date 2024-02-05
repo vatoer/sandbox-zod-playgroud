@@ -13,7 +13,7 @@ import { enGB, id } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { SelectSingleEventHandler } from "react-day-picker";
-import { FieldError, UseFormRegister } from "react-hook-form";
+import { FieldError, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 //export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -22,6 +22,7 @@ interface IDatePickerProps {
   label: string;
   type?: string;
   register: UseFormRegister<any>;
+  setValue: UseFormSetValue<any>;
   name: string;
   error: FieldError | undefined;
   className?: string;
@@ -33,6 +34,7 @@ export const InputDatePicker = ({
   date: Initdate,
   label,
   register,
+  setValue,
   name,
   error,
   type = "text",
@@ -46,6 +48,10 @@ export const InputDatePicker = ({
   const handleSelect: SelectSingleEventHandler = (newDate) => {
     setDate(newDate ?? date);
     setIsPopoverOpen(false);
+    const newValue = date
+      ? format(date, "PPP", { locale: props.locale ?? id })
+      : "";
+    setValue(name, newValue);
   };
 
   const defaultStartDate = new Date();
@@ -69,11 +75,6 @@ export const InputDatePicker = ({
             <input
               placeholder="dd-mm-yyyy"
               readOnly
-              value={
-                date
-                  ? format(date, "yyyy-MM-dd", { locale: props.locale ?? id })
-                  : ""
-              }
               type={"text"}
               id={name}
               {...register(name)}
